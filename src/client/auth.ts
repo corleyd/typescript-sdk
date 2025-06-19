@@ -246,7 +246,6 @@ export async function discoverOAuthProtectedResourceMetadata(
       throw error;
     }
   }
-
   if (response.status === 404) {
     throw new Error(`Resource server does not implement OAuth 2.0 Protected Resource Metadata.`);
   }
@@ -269,8 +268,9 @@ export async function discoverOAuthMetadata(
   authorizationServerUrl: string | URL,
   opts?: { protocolVersion?: string },
 ): Promise<OAuthMetadata | undefined> {
-  const url = new URL("/.well-known/oauth-authorization-server", authorizationServerUrl);
+  const url = new URL(".well-known/oauth-authorization-server", authorizationServerUrl);
   let response: Response;
+  console.log("Discovering OAuth metadata at", url.toString());
   try {
     response = await fetch(url, {
       headers: {
